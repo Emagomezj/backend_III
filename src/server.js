@@ -27,7 +27,7 @@ server.use("/public", express.static(paths.public));
 passportConfig(server);
 
 server.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
-console.log(specs)
+
 // Rutas
 server.use("/mockingusers", new UserMockRouter().getRouter());
 server.use("/mockingpets", new PetMockRouter().getRouter() );
@@ -36,7 +36,7 @@ server.use("/api/users", new UserRouter().getRouter())
 
 
 server.use("*", (req, res) => {
-    res.status(404).send("<h1>Error 404</h1><h3>La URL indicada no existe en este servidor</h3>");
+    res.status(404).send("La ruta indicada no existe");
 });
 
 server.use((error, req, res) => {
