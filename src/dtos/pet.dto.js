@@ -1,12 +1,9 @@
-import { toBoolean } from "../utils/index.js"
+import { toBoolean } from "../utils/index.js";
+import { formatDate } from "../utils/index.js";
 
 export class PetDTO{
     model(model){
-        model.birthDate = model.birthDate.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          });
+        model.birthDate = formatDate(model.birthDate)
         return {
             id: model.id,
             name: model.name,
