@@ -27,6 +27,15 @@ describe("Test de integración Pets", () => {
       expect(body.payload.adopted).to.be.equal(false);
     });
 
+    it("[GET] /api/pets/:id - Debe retornar una mascota", async () => {
+        const { status, body } = await request.get(`/${test_pet.id}`)
+        expect(status).to.be.equal(200);
+        expect(body.payload).to.be.an("object");
+        expect(body.payload.name).to.be.equal("Pet Test");
+        expect(body.payload.specie).to.be.equal("Gato");
+        expect(body.payload.adopted).to.be.equal(false);
+    })
+
     it("[PUT] /api/pets/:pid - Debe actualizar una mascota", async () => {
       const newPet = {
         specie: "Perro",

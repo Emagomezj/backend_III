@@ -4,7 +4,7 @@ import { hasher } from "../utils/index.js";
 export class UserDTO{
     model(user){
         return {
-            id: user._id,
+            id: user._id || user.id,
             name: user.name,
             surname: user.surname,
             email: user.email,
