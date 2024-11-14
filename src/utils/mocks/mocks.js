@@ -1,12 +1,13 @@
 import { fakerES_MX as faker } from "@faker-js/faker";
-import { USER } from "../../constants/roles.constant.js"
+import { USER } from "../../constants/roles.constant.js";
+import { hasher } from "../passHandler.js";
 
 export const generateSingleUser = () => {
     const user = {
         name: faker.person.firstName(),
         surname: faker.person.lastName(),
         email: faker.internet.email(),
-        password: "coder123",
+        password: hasher("coder123"),
         roles: [USER],
         pets: [],
       };
@@ -14,15 +15,10 @@ export const generateSingleUser = () => {
 }
 
 export const generateSinglePet = () => {
-    const fakeBirthDate = faker.date.birthdate({ mode: 'year', min: 2008, max: 2024 })
     const pet = {
         name: faker.person.firstName(),
         specie: faker.animal.type(),
-        birthDate: fakeBirthDate.toLocaleDateString('es-ES', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          })
+        birthDate: faker.date.birthdate({ mode: 'year', min: 2008, max: 2024 })
     }
     return pet
 }

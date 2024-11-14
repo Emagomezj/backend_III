@@ -37,15 +37,22 @@ export default class PetRepository{
         const pet = await this.#petDAO.getOneById(id, "owner");
         if(!pet) throw new Error(NOT_FOUND_ID);
         const formatedPet = this.#petDTO.model(pet)
-
+        
         return this.#petDTO.model(formatedPet)
     };
 
     async save(data){
         const formatedData = this.#petDTO.data(data);
         const pet = await this.#petDAO.save(formatedData);
-        const formatedPet = this.#petDTO.model(pet)
-        return formatedPet
+        const formatedPet = this.#petDTO.model(pet);
+        
+        return formatedPet;
+    };
+
+    async insertMany(data) {
+        const pets = await this.#petDAO.insertMany(data);
+        const response = pets.map(p => this.#petDTO.model(p))
+        return response;
     };
 
     async deleteOneById(id){
@@ -54,5 +61,9 @@ export default class PetRepository{
         await this.#petDAO.deleteOneById(id);
         const formatedPet = this.#petDTO.model(pet);
         return formatedPet
+    };
+
+    async deleteManyById(data){
+        return await this.#petDAO.deleteManyById(data)
     };
 }

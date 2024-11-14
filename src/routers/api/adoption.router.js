@@ -1,5 +1,5 @@
-import BaseRouter from "../base.router";
-import AdoptionController from "../../controllers/adoption.controller";
+import BaseRouter from "../base.router.js";
+import AdoptionController from "../../controllers/adoption.controller.js";
 
 export default class AdoptionRouter extends BaseRouter{
     #adoptionController
@@ -19,4 +19,4 @@ export default class AdoptionRouter extends BaseRouter{
 
         this.addDeleteRoute("/:id", [], (req,res) => this.#adoptionController.deleteOneById(req,res))
     }
-}
+};

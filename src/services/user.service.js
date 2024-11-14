@@ -31,7 +31,7 @@ export default class UserService{
     };
 
     async insertMany(data){
-        const users = await Promise.all(data.map(u => this.#userRepository.save(u)));
+        const users = await this.#userRepository.insertMany(data)
         return users;
     }
 
@@ -43,5 +43,9 @@ export default class UserService{
 
     async deleteOneById(id){
         return await this.#userRepository.deleteOneById(id)
-    }
+    };
+
+    async deleteManyById(data){
+        return await this.#userRepository.deleteManyById(data);
+    };
 }

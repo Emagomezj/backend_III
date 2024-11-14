@@ -25,11 +25,7 @@ export default class PetService{
     };
 
     async insertMany(data){
-        const pets = []
-        for(const pet of data){
-            const newPet = await this.#petRepository.save(pet)
-            pets.push(newPet)
-        }
+        const pets = await this.#petRepository.insertMany(data)
         return pets;
     }
 
@@ -41,5 +37,9 @@ export default class PetService{
 
     async deleteOneById(id){
         return await this.#petRepository.deleteOneById(id)
-    }
+    };
+
+    async deleteManyById(data){
+        return await this.#petRepository.deleteManyById(data);
+    };
 }

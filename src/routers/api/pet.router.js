@@ -22,6 +22,8 @@ export default class PetRouter extends BaseRouter {
 
         this.addDeleteRoute("/:id",[], (req,res) => this.#petController.deleteOneById(req,res));
 
+        this.addDeleteRoute("/many", [], (req,res) => this.#petController.deleteManyPets(req,res));
+
         router.use((err, req, res, next) => {
             res.sendError(err);
         });

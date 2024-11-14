@@ -75,5 +75,14 @@ export default class PetController{
         } catch (error) {
             res.sendError(error);
         };
-    }
+    };
+
+    async deleteManyPets(req,res){
+        try {
+            const response = await this.#petService.deleteManyById(req.body);
+            res.sendSuccess200(response);
+        } catch (error) {
+            res.sendError(error);
+        }
+    };
 }

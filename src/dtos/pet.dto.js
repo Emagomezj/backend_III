@@ -1,14 +1,13 @@
 import { toBoolean } from "../utils/index.js";
-import { formatDate } from "../utils/index.js";
+import moment from "moment";
 
 export class PetDTO{
     model(model){
-        model.birthDate = formatDate(model.birthDate)
         return {
             id: model.id,
             name: model.name,
             specie: model.specie,
-            birthDate: model.birthDate,
+            birthDate: model.birthDate instanceof Date ? moment(model.birthDate).format('DD-MM-YYYY') : model.birthDate,
             adopted: model.adopted,
             owner: model?.owner ? {
                 id: model.owner.id,
@@ -30,4 +29,15 @@ export class PetDTO{
             thumbnail: data.thumbnail || "/public/images/default_pet.svg"
         }
     };
+
+    adoption(model){
+        return {
+            id: model?.id || model._id.toString(),
+            name: model.name,
+            specie: model.specie,
+            birthDate: model.birthDate,
+            adopted: model.adopted,
+            thumbnail: model.thumbnail
+        }
+    }
 }

@@ -51,6 +51,13 @@ export default class UserRepository{
         };
         return this.#userDTO.model(user);
     };
+
+    async insertMany(data) {
+        const users = await this.#userDAO.insertMany(data);
+        const response = users.map(u => this.#userDTO.model(u))
+        return response;
+    };
+
     async save(data) {
         const formatedData = this.#userDTO.data(data);
         const user = await this.#userDAO.save(formatedData)
@@ -63,5 +70,9 @@ export default class UserRepository{
         if(!user) throw new Error(NOT_FOUND_ID)
         await this.#userDAO.deleteOneById(id);
         return this.#userDTO.model(user);
+    };
+
+    async deleteManyById(data){
+        return await this.#userDAO.deleteManyById(data)
     };
 }

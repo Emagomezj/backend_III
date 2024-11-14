@@ -27,15 +27,11 @@ export default class AdoptionService{
     };
 
     async createAdoption(data){
-        const pet = await this.#petRepository.findOneById(data.pid)
-        const user = await this.#userRepository.findOneById(data.oid)
+        const pet = await this.#petRepository.getOneById(data.pid)
+        const user = await this.#userRepository.getOneById(data.oid)
         if(!pet || !user) throw new Error(NOT_FOUND_ID)
         if(pet.adopted) throw new Error(ERROR_ALREADY_ADOPTED)
-        const petNewValues = {...pet, owner: data.oid, adopted: true};
-        const userNewValues = {...user, pets: [...user.pets,data.pid]};
-        await this.#petRepository.save(petNewValues);
-        await this.#userRepository.save(userNewValues);
-        return await this.#adoptionRepository.save(data);
+        return await this.#adoptionRepository.createAdoption(data);
     };
 
     async updateOneById(id,data){

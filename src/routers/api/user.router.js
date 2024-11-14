@@ -21,5 +21,11 @@ export default class UserRouter extends BaseRouter{
         this.addPutRoute("/update/:id",[], (req,res) => this.#userController.updateOneById(req,res));
 
         this.addDeleteRoute("/delete/:id",[], (req,res) => this.#userController.deleteUserById(req,res));
+
+        this.addDeleteRoute("delete/many", [], (req,res) => this.#userController.deleteManyUsers(req,res));
+
+        router.use((err, req, res, next) => {
+            res.sendError(err);
+        });
     }
 }

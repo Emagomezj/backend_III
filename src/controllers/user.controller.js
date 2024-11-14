@@ -28,10 +28,10 @@ export default class UserController{
     async findOneById(req,res){
         try {
             const {id} = req.params
-            const user = await this.#userService.findOneById(id)
-            res.sendSuccess200(user)
+            const user = await this.#userService.findOneById(id);
+            res.sendSuccess200(user);
         } catch (error) {
-            res.sendError(error)
+            res.sendError(error);
         }
     };
 
@@ -81,7 +81,16 @@ export default class UserController{
             const response = await this.#userService.createUser(user);
             res.sendSuccess201(response);
         } catch (error) {
-            res.sendError(error)
+            res.sendError(error);
+        }
+    };
+
+    async deleteManyUsers(req,res){
+        try {
+            const response = await this.#userService.deleteManyById(req.body);
+            res.sendSuccess200(response);
+        } catch (error) {
+            res.sendError(error);
         }
     };
 }

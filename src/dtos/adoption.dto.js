@@ -11,15 +11,18 @@ export class AdoptionDTO {
         this.#petDTO = new PetDTO();
     }
     model(adoption){
-        return {
-            owner: this.#userDTO.model(adoption.owner),
-            pet: this.#petDTO.model(adoption.pet),
+        const formatedAdoption = {
+            id: adoption.id || adoption._id.toString() ,
+            owner: this.#userDTO.adoption(adoption.ownerDetails),
+            pet: this.#petDTO.adoption(adoption.petDetails),
             adoptionDate: moment(adoption.createdAt).format('DD-MM-YYYY')
         }
+        
+        return formatedAdoption
     }
 
     data(data){
-        if(!data?.owner || !data?.pet) throw new Error(BAD_REQUEST)
+        if(!data?.oid || !data?.pid) throw new Error(BAD_REQUEST)
         return {
             owner: data.oid,
             pet: data.pid

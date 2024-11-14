@@ -23,6 +23,11 @@ export default class BaseDAO{
         return await this.#model.paginate(filters, options)
     }
 
+    async insertMany(data){
+        const response = this.#model.insertMany(data)
+        return response
+    }
+
     async getOneById(id,populateField){
         if(populateField){
             const response = await this.#model.findById(id).populate(populateField);
@@ -61,6 +66,7 @@ export default class BaseDAO{
             });
             object = new this.#model(newObject);
         }
+
         return object.save()
     }
 
@@ -68,17 +74,39 @@ export default class BaseDAO{
         return await this.#model.deleteOne({ _id: id });
     }
 
-    async updateField(data){
-        const object = await this.#model.findById(data.id)
+    async deleteManyById(data){
+        const response = await this.#model.deleteMany({ _id: { $in: data} });
+        return {
+            message: "Documentos eliminados con éxito",
+            deletedCount: response.deletedCount
+        }
+    }
+
+    async updateField(data, field, op){
+        const object = await this.getOneById(data.id,field)
         if(!object){
             throw new Error(NOT_FOUND);   
-        }
-        if(field === "pets"){
-            object.field.push(data.pid)
-        } else {
-            object.field = data.oid
-        }
+        };
 
-        return await object.save()
+        const key = `${field}-${op}`
+
+        switch(key){
+            case "pets-add":
+                object.pets.push(data.pid);
+                return await object.save();
+            case "pets-remove":
+                object.pets = object.pets.filter(p => p.id.toString() != data.pid);
+                return await object.save();
+            case "owner-add":
+                object.owner = data.oid;
+                object.adopted = true
+                return await object.save();
+            case "owner-remove":
+                object.owner = null
+                object.adopted = false
+                return await object.save();
+            default:
+                throw new Error("Operación no soportada");
+        };
     }
 }
