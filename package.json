@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch --no-warnings ./src/server.js",
-    "test": "mocha './src/test/**/*.test.js'"
+    "test": "mocha './src/test/**/*.test.js'",
+    "start": "node ./src/server.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@faker-js/faker": "^9.0.3",
-    "bcrypt": "^5.1.1",
+    
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
